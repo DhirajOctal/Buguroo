@@ -5,17 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StatFs;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.octalsoftaware.buguroo.Adapters.ContextAdapter;
 import com.octalsoftaware.buguroo.Delegate.SetOnClickListener;
 import com.octalsoftaware.buguroo.R;
+import com.octalsoftaware.buguroo.Utils.CalendarContentResolver;
 import com.octalsoftaware.buguroo.Utils.ContextInformation;
 import com.octalsoftaware.buguroo.Utils.DiskUtils;
 
+import java.io.File;
 import java.util.Objects;
 
 public class ContextActivity extends AppCompatActivity {
@@ -87,23 +92,30 @@ public class ContextActivity extends AppCompatActivity {
     }
 
     private void numberOfEntriesInAgenda() {
+
+        CalendarContentResolver calendarContentResolver = new CalendarContentResolver(context);
+        Log.e("calendar : ", "Calendar : " + calendarContentResolver.getCalendars());
     }
 
     private void diskSpace() {
         StringBuilder data = new StringBuilder();
         if (DiskUtils.isExternalStorageIsAvailabe()) {
-            data.append("<b>External Storage Space</b>");
-            data.append("<br/");
-            data.append("<b>Total Space : </b>" + DiskUtils.totalMemory(true));
+            data.append("<b>External Memory Information</b>");
             data.append("<br/>");
-            data.append("<b>Free Space : </b>" + DiskUtils.freeMemory(true));
+            data.append("<b>Used Space  : </b>" + DiskUtils.bytesToHuman(DiskUtils.usedMemory(true)));
+            data.append("<br/>");
+            data.append("<b>Free Space  : </b>" + DiskUtils.bytesToHuman(DiskUtils.freeMemory(true)));
+            data.append("<br/>");
+            data.append("<b>Total Space : </b>" + DiskUtils.bytesToHuman(DiskUtils.totalMemory(true)));
             data.append("<br/><br/>");
         }
-        data.append("<b>Internal Storage Space</b>");
+        data.append("<b>Internal Memory Information</b><br/>");
         data.append("<br/>");
-        data.append("<b>Total Space : </b>" + DiskUtils.totalMemory(false));
+        data.append("<b>Used Space : </b>" + DiskUtils.bytesToHuman(DiskUtils.usedMemory(false)));
         data.append("<br/>");
-        data.append("<b>Free Space : </b>" + DiskUtils.freeMemory(false));
+        data.append("<b>Free Space : </b>" + DiskUtils.bytesToHuman(DiskUtils.freeMemory(false)));
+        data.append("<br/>");
+        data.append("<b>Total Space : </b>" + DiskUtils.bytesToHuman(DiskUtils.totalMemory(false)));
         Intent newActivity8 = new Intent(context, ShowDeviceDetails.class);
         newActivity8.putExtra("fromPosition", 8);
         newActivity8.putExtra("data", data.toString());
