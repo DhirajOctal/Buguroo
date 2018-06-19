@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StatFs;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +18,6 @@ import com.octalsoftaware.buguroo.Utils.CalendarContentResolver;
 import com.octalsoftaware.buguroo.Utils.ContextInformation;
 import com.octalsoftaware.buguroo.Utils.DiskUtils;
 
-import java.io.File;
 import java.util.Objects;
 
 public class ContextActivity extends AppCompatActivity {
@@ -99,7 +96,7 @@ public class ContextActivity extends AppCompatActivity {
 
     private void diskSpace() {
         StringBuilder data = new StringBuilder();
-        if (DiskUtils.isExternalStorageIsAvailabe()) {
+        /*if (DiskUtils.isExternalStorageIsAvailabe()) {
             data.append("<b>External Memory Information</b>");
             data.append("<br/>");
             data.append("<b>Used Space  : </b>" + DiskUtils.bytesToHuman(DiskUtils.usedMemory(true)));
@@ -108,7 +105,7 @@ public class ContextActivity extends AppCompatActivity {
             data.append("<br/>");
             data.append("<b>Total Space : </b>" + DiskUtils.bytesToHuman(DiskUtils.totalMemory(true)));
             data.append("<br/><br/>");
-        }
+        }*/
         data.append("<b>Internal Memory Information</b><br/>");
         data.append("<br/>");
         data.append("<b>Used Space : </b>" + DiskUtils.bytesToHuman(DiskUtils.usedMemory(false)));
